@@ -1,9 +1,9 @@
 -- CreateTable
-CREATE TABLE "Todo" (
+CREATE TABLE "Mensagem" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "text" TEXT NOT NULL,
-    "completed" BOOLEAN NOT NULL,
+    "descricao" TEXT NOT NULL,
+    "celular" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );

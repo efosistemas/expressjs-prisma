@@ -10,62 +10,34 @@ app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
 
-app.get("/todos", async (req, res) => {
-  const todos = await prisma.todo.findMany({
+app.get("/mensagens", async (req, res) => {
+  const mensagem = await prisma.mensagem.findMany({
     orderBy: { createdAt: "desc" },
   });
 
-  res.json(todos);
+  res.json(mensagem);
 });
 
-app.post("/todos", async (req, res) => {
-  const todo = await prisma.todo.create({
+app.post("/mensagem", async (req, res) => {
+  const mensagem = await prisma.mensagem.create({
     data: {
-      completed: false,
+      descricao,
+      celular,
       createdAt: new Date(),
-      text: req.body.text ?? "Empty todo",
     },
   });
 
-  return res.json(todo);
+  return res.json(mensagem);
 });
 
-app.get("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  const todo = await prisma.todo.findUnique({
-    where: { id },
-  });
-
-  return res.json(todo);
-});
-
-app.put("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  const todo = await prisma.todo.update({
-    where: { id },
-    data: req.body,
-  });
-
-  return res.json(todo);
-});
-
-app.delete("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  await prisma.todo.delete({
-    where: { id },
-  });
-
-  return res.send({ status: "ok" });
-});
 
 app.get("/", async (req, res) => {
   res.send(
     `
-  <h1>Todo REST API</h1>
+  <h1>Mensagem REST API</h1>
   <h2>Available Routes</h2>
   <pre>
-    GET, POST /todos
-    GET, PUT, DELETE /todos/:id
+    GET, POST /mensagens
   </pre>
   `.trim(),
   );
