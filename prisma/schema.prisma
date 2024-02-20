@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Mensagem {
+model mensagem {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   descricao String
