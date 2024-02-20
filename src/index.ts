@@ -19,6 +19,8 @@ app.get("/mensagens", async (req, res) => {
 });
 
 app.post("/mensagem", async (req, res) => {
+  const { descricao, celular } = req.body;
+
   const mensagem = await prisma.mensagem.create({
     data: {
       descricao,
