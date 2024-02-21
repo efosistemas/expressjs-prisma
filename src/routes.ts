@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { UserController } from './controller/UserController'
 import { MensagemController } from './controller/MensagemController'
 
 const routes = Router()
