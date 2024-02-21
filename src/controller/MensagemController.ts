@@ -25,6 +25,7 @@ export class MensagemController {
 				  createdAt: new Date(),
 				},
 			  });
+			  res.json(mensagem);
 		} catch (error) {
 			return res.status(500).json({ message: 'Internal Server Error' })
 		}
