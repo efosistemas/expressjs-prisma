@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-export class usersController {
+export class UserController {
 	
 	async create(req: Request, res: Response) {
 		const { name, email, password } = req.body
