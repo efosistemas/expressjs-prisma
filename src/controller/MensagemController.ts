@@ -26,7 +26,6 @@ export class MensagemController {
 				},
 			  });
 		} catch (error) {
-			console.log(error)
 			return res.status(500).json({ message: 'Internal Server Error' })
 		}
 	}
@@ -39,7 +38,6 @@ export class MensagemController {
 			
 			res.json(mensagem);
 		} catch (error) {
-			console.log(error)
 			return res.status(500).json({ message: 'Internal Sever Error' })
 		}
 	}
