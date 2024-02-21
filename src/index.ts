@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
 
+app.use(routes)
+
 app.get("/", async (req, res) => {
     res.send(
       `
