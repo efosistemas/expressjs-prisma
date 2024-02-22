@@ -59,14 +59,15 @@ export class UserController {
 			},
 		  });
 
-		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {
-			expiresIn: '8h',
-		})
+//		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {
+//			expiresIn: '8h',
+//		})
 
 
 		return res.json({
+			email: email,
 			user: user,
-			token: token,
+//			token: token,
 		})
 	}
 
