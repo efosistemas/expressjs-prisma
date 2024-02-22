@@ -53,7 +53,11 @@ export class UserController {
 	async login(req: Request, res: Response) {
 		const { email, password } = req.body
 
-		const user = await prisma.user.findUnique( email )
+		const user = await prisma.user.findFirst({
+			where: {
+			  email: email,
+			},
+		  });
 
 		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {
 			expiresIn: '8h',
