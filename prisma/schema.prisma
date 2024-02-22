@@ -11,17 +11,17 @@ generator client {
 }
 
 model mensagem {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  descricao String
-  celular   String
+  id        String   @id @default(uuid()) not null
+  createdAt DateTime @default(now()) not null
+  descricao String   not null
+  celular   String   not null
 }
 
 model user {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-	name      String
-	email     String
-	password  String
+  id        String   @id @default(uuid()) not null
+  createdAt DateTime @default(now()) not null
+	name      String   not null
+	email     String   not null
+	password  String   not null
 }
 

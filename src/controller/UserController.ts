@@ -2,6 +2,9 @@ import { Request, Response } from 'express'
 
 import { PrismaClient } from "@prisma/client";
 
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 const prisma = new PrismaClient();
 
 
@@ -46,4 +49,21 @@ export class UserController {
 			return res.status(500).json({ message: 'Internal Sever Error' })
 		}
 	}
+
+	async login(req: Request, res: Response) {
+		const { email, password } = req.body
+
+		const user = await prisma.user.findUnique( email )
+
+		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {
+			expiresIn: '8h',
+		})
+
+
+		return res.json({
+			user: user,
+			token: token,
+		})
+	}
+
 }
