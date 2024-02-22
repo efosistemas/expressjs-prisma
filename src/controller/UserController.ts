@@ -66,7 +66,7 @@ export class UserController {
 
 		return res.json({
 			user: user,
-//			token: token,
+			token: token,
 		})
 	}
 
