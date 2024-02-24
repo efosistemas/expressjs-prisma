@@ -16,11 +16,8 @@ app.use(routes)
 app.get("/", async (req, res) => {
     res.send(
       `
-    <h1>Artist REST API</h1>
-    <h2>Available Routes</h2>
-    <pre>
-      GET, POST /artists
-    </pre>
+    <h1>REST API Mensagem</h1>
+     </pre>
     `.trim(),
     );
   });
