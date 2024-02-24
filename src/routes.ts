@@ -5,7 +5,7 @@ import { MensagemController } from './controller/MensagemController'
 const routes = Router()
 
 routes.post('/user', new UserController().create)
-routes.get('/login', new UserController().login)
+routes.post('/login', new UserController().login)
 routes.get('/users', new UserController().list)
 
 routes.post('/mensagem', new MensagemController().create)
