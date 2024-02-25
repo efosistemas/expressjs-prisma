@@ -1,9 +1,8 @@
-import { User } from '../../prisma'
-
-declare global {
-	namespace Express {
+	declare namespace Express {
 		export interface Request {
-			user: Partial<User>
+			user: any;
+		}
+		export interface Response {
+			user: any;
 		}
 	}
-}
