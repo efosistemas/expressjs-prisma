@@ -14,9 +14,6 @@ export class UserController {
 	async create(req: Request, res: Response) {
 		const { name, email, password } = req.body
 
-		if (!name) {
-			throw new BadRequestError('O nome é obrigatório');
-		}
 		if (!email) {
 			throw new BadRequestError('O email é obrigatório');
 		}
