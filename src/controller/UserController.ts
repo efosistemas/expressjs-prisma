@@ -49,7 +49,14 @@ export class UserController {
 
 	async list(req: Request, res: Response) {
 		try {
-			const user = await prisma.user.findMany({ orderBy: { createdAt: "desc" }});
+			const user = await prisma.user.findMany({ 
+				select: {
+					password: false
+				},
+				orderBy: { 
+					createdAt: "desc"
+				}
+			});
 			res.json(user);
 		} catch (error) {
 			return res.status(500).json({ message: 'Internal Sever Error' })
@@ -84,10 +91,7 @@ export class UserController {
 	}
 	
 	async getProfile(req: Request, res: Response) {
-		const user = req.user;
-		const { password: _, ...loggedUser } = user
-
-		return res.json(loggedUser)
+		return res.json(req.user)
 	}
 
 }
