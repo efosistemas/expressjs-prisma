@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { BadRequestError } from '../helpers/api-erros'
 
 import { PrismaClient } from "@prisma/client";
 
@@ -11,33 +12,24 @@ export class MensagemController {
 		const { descricao, celular } = req.body
 
 		if (!descricao) {
-			return res.status(400).json({ message: 'Descrição é obrigatória' })
+			throw new BadRequestError('Descrição é obrigatória');
 		}
 		if (!celular) {
-			return res.status(400).json({ message: 'Celular é obrigatório' })
+			throw new BadRequestError('Celular é obrigatório');
 		}
 
-		try {
-			const mensagem = await prisma.mensagem.create({
-				data: {
-				  descricao,
-				  celular,
-				  createdAt: new Date(),
-				},
-			  });
-			  res.json(mensagem);
-		} catch (error) {
-			return res.status(500).json({ message: 'Internal Server Error' })
-		}
+		const mensagem = await prisma.mensagem.create({
+			data: {
+			  	descricao,
+				celular,
+				createdAt: new Date(),
+			},
+		});
+		res.json(mensagem);
 	}
 
 	async list(req: Request, res: Response) {
-		try {
-			const mensagem = await prisma.mensagem.findMany({ orderBy: { createdAt: "desc" }});
-			 
-			res.json(mensagem);
-		} catch (error) {
-			return res.status(500).json({ message: 'Internal Sever Error' })
-		}
+		const mensagem = await prisma.mensagem.findMany({ orderBy: { createdAt: "desc" }});
+		res.json(mensagem);
 	}
 }

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { BadRequestError } from '../helpers/api-erros'
 
 import { PrismaClient } from "@prisma/client";
 
@@ -14,51 +15,50 @@ export class UserController {
 		const { name, email, password } = req.body
 
 		if (!name) {
-			return res.status(400).json({ message: 'Nome é obrigatório' })
+			throw new BadRequestError('O nome é obrigatório');
 		}
 		if (!email) {
-			return res.status(400).json({ message: 'Email é obrigatório' })
+			throw new BadRequestError('O email é obrigatório');
 		}
 		if (!password) {
-			return res.status(400).json({ message: 'Senha é obrigatória' })
+			throw new BadRequestError('A senha é obrigatória');
 		}
 
 		const userExists = await prisma.user.findFirst({where: {email: email}});
 
 		if (userExists) {
-			return res.status(400).json({ message: 'Email já cadastrado' })
+			throw new BadRequestError('Email já cadastrado');
 		}
 
 		const hashPassword = await bcrypt.hash(password, 10)
 
-		try {
-			const newUser = await prisma.user.create({
-				data: {
-				  name,
-				  email,
-				  password: hashPassword,
-				  createdAt: new Date(),
-				},
-			  });
-			  const { password: _, ...user } = newUser
-			  res.json(user);
-		} catch (error) {
-			return res.status(500).json({ message: 'Internal Server Error' })
-		}
+		const newUser = await prisma.user.create({
+			data: {
+			  name,
+			  email,
+			  password: hashPassword,
+			  createdAt: new Date(),
+			},
+		  });
+
+	  	const { password: _, ...user } = newUser
+	  	res.json(user);
 	}
 
 	async list(req: Request, res: Response) {
-		try {
-			const user = await prisma.user.findMany({
-				select: {
-					password: false,
-					name: true,
-				  },
+		const user = await prisma.user.findMany({
+			select: {
+				password: false,
+				name: true,
+				email: true
+			},
+			orderBy: [
+				{
+					createdAt: 'desc',
+				},
+			]
 			});
 			res.json(user);
-		} catch (error) {
-			return res.status(500).json({ message: 'Internal Sever Error' })
-		}
 	}
 
 	async login(req: Request, res: Response) {
@@ -67,13 +67,13 @@ export class UserController {
 		const user = await prisma.user.findFirst({ where: { email: email }});
 
 		if (!user) {
-			return res.status(400).json({ message: 'E-mail/Senha inválidos' })
+			throw new BadRequestError('Email/Senha inválidos');
 		}
 
 		const verifyPass = await bcrypt.compare(password, user.password)
 
 		if (!verifyPass) {
-			return res.status(400).json({ message: 'E-mail/Senha inválidos' })
+			throw new BadRequestError('Email/Senha inválidos');
 		}
 
 		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {
