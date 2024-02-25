@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import routes from './routes'
 
+import { errorMiddleware } from './middlewares/error'
+
 const prisma = new PrismaClient();
 
 const app = express();
@@ -13,7 +15,5 @@ app.use(express.text({ type: "text/html" }));
 
 app.use(routes)
   
-app.listen(Number(port), "0.0.0.0", () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
-  
+app.use(errorMiddleware)
+app.listen(process.env.PORT)
