@@ -84,7 +84,10 @@ export class UserController {
 	}
 	
 	async getProfile(req: Request, res: Response) {
-		return res.json(req.user)
+		const user = req.user;
+		const { password: _, ...loggedUser } = user
+
+		return res.json(loggedUser)
 	}
 
 }
