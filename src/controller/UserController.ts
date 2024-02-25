@@ -62,13 +62,13 @@ export class UserController {
 		const user = await prisma.user.findFirst({ where: { email: email }});
 
 		if (!user) {
-			return res.status(400).json({ message: 'E-mail inválidos' })
+			return res.status(400).json({ message: 'E-mail/Senha inválidos' })
 		}
 
 		const verifyPass = await bcrypt.compare(password, user.password)
 
 		if (!verifyPass) {
-			return res.status(400).json({ message: 'senha inválidos' })
+			return res.status(400).json({ message: 'E-mail/Senha inválidos' })
 		}
 
 		const token = jwt.sign({ id: user?.id }, process.env.JWT_PASS ?? '', {

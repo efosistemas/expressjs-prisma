@@ -33,10 +33,8 @@ export class MensagemController {
 
 	async list(req: Request, res: Response) {
 		try {
-			const mensagem = await prisma.mensagem.findMany({
-				orderBy: { createdAt: "desc" },
-			});
-			
+			const mensagem = await prisma.mensagem.findMany({ orderBy: { createdAt: "desc" }});
+			 
 			res.json(mensagem);
 		} catch (error) {
 			return res.status(500).json({ message: 'Internal Sever Error' })
