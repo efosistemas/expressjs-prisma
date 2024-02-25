@@ -36,7 +36,7 @@ export class UserController {
 				data: {
 				  name,
 				  email,
-				  password,
+				  password: hashPassword,
 				  createdAt: new Date(),
 				},
 			  });
