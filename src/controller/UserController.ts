@@ -49,7 +49,11 @@ export class UserController {
 
 	async list(req: Request, res: Response) {
 		try {
-			const user = await prisma.user.findMany({ orderBy: { createdAt: "desc" }});
+			const user: object | null = await prisma.user.findMany({
+				select: {
+				  password: false,
+				},
+			  })
 			res.json(user);
 		} catch (error) {
 			return res.status(500).json({ message: 'Internal Sever Error' })
