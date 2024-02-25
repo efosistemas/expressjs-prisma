@@ -65,8 +65,7 @@ export class UserController {
 
 
 		return res.json({
-			email: email,
-			pass: password,
+			user: user?.name
 		})
 	}
 
