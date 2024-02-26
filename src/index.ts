@@ -1,3 +1,4 @@
+import 'express-async-errors'
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import routes from './routes'
