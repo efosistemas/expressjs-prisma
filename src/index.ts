@@ -17,4 +17,4 @@ app.use(express.text({ type: "text/html" }));
 app.use(routes)
   
 app.use(errorMiddleware)
-app.listen(process.env.PORT)
+app.listen(port)
