@@ -6,11 +6,6 @@ import { NotFoundError } from './helpers/api-erros'
 
 const routes = Router()
 
-routes.get('/', (req, res) => {
-    throw new NotFoundError('not found')
-    return res.json('ok')
-})
-
 routes.post('/user', new UserController().create)
 routes.post('/login', new UserController().login)
 
