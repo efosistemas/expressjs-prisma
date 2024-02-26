@@ -17,4 +17,7 @@ app.use(express.text({ type: "text/html" }));
 app.use(routes)
   
 app.use(errorMiddleware)
-app.listen(port)
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
